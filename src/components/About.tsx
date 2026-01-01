@@ -19,9 +19,9 @@ export default function About({ id = 'about' }: AboutProps) {
       }`}
     >
       <div className="max-w-5xl w-full">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-1 gap-12 items-center">
           {/* Profile Image */}
-          <div className="flex justify-center md:justify-end">
+          {/* <div className="flex justify-center md:justify-end">
             <div className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full blur opacity-25 group-hover:opacity-40 transition duration-300"></div>
               <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white shadow-2xl">
@@ -32,7 +32,7 @@ export default function About({ id = 'about' }: AboutProps) {
                 />
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* About Text */}
           <div className="space-y-6 animate-slide-up">
@@ -41,27 +41,26 @@ export default function About({ id = 'about' }: AboutProps) {
                 About Me
               </h2>
               <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
-                Hi, I'm a Developer
+                Hi, I'm Forworddash
               </h1>
             </div>
 
             <div className="prose prose-slate max-w-none">
               <p className="text-lg text-slate-600 leading-relaxed">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+                I'm passionate about building impactful software. If I can work on a project
+                that helps solve a business problem or improves someone's day-to-day life, I'm all in.
+                Privacy and security are my top priorities when developing software. I believe the best software 
+                respects user data and operates transparently.
               </p>
               <p className="text-lg text-slate-600 leading-relaxed">
-                Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                cupidatat non proident, sunt in culpa qui officia deserunt mollit
-                anim id est laborum.
+                Currently I'm focusing on learning Rust and C to deepen my understanding of systems programming
+                and performance optimization.
               </p>
             </div>
 
             <div className="flex gap-4 pt-4">
               <a
-                href="https://github.com/yourusername"
+                href="https://github.com/Forworddash"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors duration-200 shadow-lg hover:shadow-xl"
