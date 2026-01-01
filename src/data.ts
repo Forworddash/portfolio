@@ -50,30 +50,9 @@ export const projects: Project[] = [
 export const openSourceContributions: OpenSourceContribution[] = [
   {
     id: '1',
-    repo: 'facebook/react',
-    description: 'Fixed memory leak in useEffect hook cleanup',
-    prUrl: 'https://github.com/facebook/react/pull/12345',
-    status: 'merged',
-  },
-  {
-    id: '2',
-    repo: 'microsoft/vscode',
-    description: 'Added TypeScript syntax highlighting improvements',
-    prUrl: 'https://github.com/microsoft/vscode/pull/67890',
-    status: 'merged',
-  },
-  {
-    id: '3',
-    repo: 'tailwindlabs/tailwindcss',
-    description: 'Contributed new utility classes for grid layouts',
-    prUrl: 'https://github.com/tailwindlabs/tailwindcss/pull/11111',
-    status: 'open',
-  },
-  {
-    id: '4',
-    repo: 'nodejs/node',
-    description: 'Performance optimization for stream processing',
-    prUrl: 'https://github.com/nodejs/node/pull/22222',
+    repo: 'LVoicechanger/Rust',
+    description: 'Updated repository to modern Rust support and added error handling.',
+    prUrl: 'https://github.com/sourcepirate/L-voice-changer/pull/4',
     status: 'merged',
   },
 ];

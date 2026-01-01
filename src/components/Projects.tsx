@@ -43,8 +43,7 @@ export default function Projects({ id = 'projects' }: ProjectsProps) {
             Featured Projects
           </h3>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            A collection of personal and professional projects showcasing various
-            technologies and problem-solving approaches.
+            A collection of personal and professional projects.
           </p>
         </div>
 

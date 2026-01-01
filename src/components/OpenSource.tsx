@@ -53,8 +53,7 @@ export default function OpenSource({ id = 'opensource' }: OpenSourceProps) {
             Open Source Work
           </h3>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            Contributing to the community by improving popular open source projects
-            and libraries.
+            Contributing to the community by supporting open source projects.
           </p>
         </div>
 
@@ -124,7 +123,7 @@ export default function OpenSource({ id = 'opensource' }: OpenSourceProps) {
         {/* GitHub Profile Link */}
         <div className="text-center mt-12">
           <a
-            href="https://github.com/yourusername"
+            href="https://github.com/Forworddash"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-8 py-4 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-all duration-200 shadow-lg hover:shadow-xl"
