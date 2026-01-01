@@ -14,7 +14,7 @@ export default function Footer() {
 
           <div className="flex gap-6">
             <a
-              href="https://github.com/yourusername"
+              href="https://github.com/Forworddash"
               target="_blank"
               rel="noopener noreferrer"
               className="text-slate-400 hover:text-white transition-colors"
@@ -58,7 +58,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-8 pt-8 border-t border-slate-800 text-center text-slate-400 text-sm">
-          <p>&copy; {currentYear} Your Name. Built with React, TypeScript & Tailwind CSS.</p>
+          <p>&copy; {currentYear} Sam. Built with React, TypeScript & Tailwind CSS.</p>
         </div>
       </div>
     </footer>
