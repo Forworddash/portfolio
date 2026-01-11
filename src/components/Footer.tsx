@@ -2,12 +2,12 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-slate-900 text-white py-12 px-6">
+    <footer className="bg-slate-900 dark:bg-black text-white py-12 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-center md:text-left">
             <h3 className="text-xl font-bold mb-2">Let's Connect</h3>
-            <p className="text-slate-400">
+            <p className="text-slate-400 dark:text-slate-500">
               Open to new opportunities and collaborations
             </p>
           </div>
@@ -17,7 +17,7 @@ export default function Footer() {
               href="https://github.com/Forworddash"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-slate-400 hover:text-white transition-colors"
+              className="text-slate-400 dark:text-slate-500 hover:text-white transition-colors"
               aria-label="GitHub"
             >
               <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -28,7 +28,7 @@ export default function Footer() {
               href="https://linkedin.com/in/yourusername"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-slate-400 hover:text-white transition-colors"
+              className="text-slate-400 dark:text-slate-500 hover:text-white transition-colors"
               aria-label="LinkedIn"
             >
               <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -37,7 +37,7 @@ export default function Footer() {
             </a>
             <a
               href="mailto:your.email@example.com"
-              className="text-slate-400 hover:text-white transition-colors"
+              className="text-slate-400 dark:text-slate-500 hover:text-white transition-colors"
               aria-label="Email"
             >
               <svg
@@ -57,7 +57,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-slate-800 text-center text-slate-400 text-sm">
+        <div className="mt-8 pt-8 border-t border-slate-800 dark:border-slate-900 text-center text-slate-400 dark:text-slate-500 text-sm">
           <p>&copy; {currentYear} Sam. Built with React, TypeScript & Tailwind CSS.</p>
         </div>
       </div>

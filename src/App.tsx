@@ -7,7 +7,7 @@ import './App.css';
 
 function App() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen dark:bg-slate-900">
       <Header />
       <main>
         <About />
