@@ -52,6 +52,15 @@ export default function Header() {
             </button>
           ))}
           
+          <a
+            href="#"
+            className={`text-sm font-medium transition-colors hover:text-blue-600 dark:hover:text-blue-400 ${
+              scrolled ? 'text-slate-700 dark:text-slate-300' : 'text-slate-700 dark:text-slate-300'
+            }`}
+          >
+            Blog
+          </a>
+          
           <button
             onClick={toggleDarkMode}
             className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
