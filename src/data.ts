@@ -16,6 +16,22 @@ export const projects: Project[] = [
     tags: ['Rust', 'CLI', 'Cryptography'],
     githubUrl: 'https://github.com/Forworddash/Aliaser',
     liveUrl: '',
+  },
+  {
+    id: '3',
+    title: 'Voice Modulator',
+    description: 'A real-time voice modulation application built in Rust. It captures audio input from the microphone, applies various voice effects, and plays the modified audio through the speakers with minimal latency.',
+    tags: ['Rust', 'Audio Processing', 'Real-time', 'CLI'],
+    githubUrl: 'https://github.com/Forworddash/voice_modulator',
+    liveUrl: '',
+  },
+  {
+    id: '4',
+    title: 'P2P File Sharing App',
+    description: 'The Python project is a P2P (peer-to-peer) file transfer system comprising two main components: a server and a client. The project utilizes Python and the Tkinter library for creating a simple graphical user interface (GUI) for the client.',
+    tags: ['Python', 'Tkinter', 'Socket Programming'],
+    githubUrl: 'https://github.com/Forworddash/P2P-File-Transfer-Py',
+    liveUrl: '',
   }
   // {
   //   id: '2',
