@@ -103,6 +103,26 @@ npm run build
 # Deploy the dist folder to GitHub Pages
 ```
 
+### GitHub Actions (automatic GitHub Pages deployment)
+
+This repository includes a GitHub Actions workflow that builds the site and publishes the `dist` output to the `gh-pages` branch.
+
+- Workflow path: [.github/workflows/deploy.yml](.github/workflows/deploy.yml)
+- It runs on pushes to `main`, installs dependencies, runs `npm run build`, and publishes `dist` using `peaceiris/actions-gh-pages`.
+
+Quick steps to enable automatic deploy:
+
+1. Create a GitHub repository and push your code to the `main` branch.
+2. Ensure GitHub Actions is enabled for the repository (default on for public repos).
+3. After pushing, the workflow will run and publish the site to the `gh-pages` branch.
+4. In your repository Settings → Pages, set the Source to the `gh-pages` branch (root).
+
+Notes:
+
+- If you plan to host the site as a project page (username.github.io/REPO), set Vite's `base` to `/REPO/` in `vite.config.ts` or build with `vite build --base=/REPO/` so asset paths are correct.
+- For a user/organization site (repository named `username.github.io`) you do not need to change `base`.
+
+
 ## 🔒 Security Features
 
 - Content Security Policy (CSP)
