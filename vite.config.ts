@@ -7,11 +7,13 @@ export default defineConfig({
   build: {
     // Optimize for production
     minify: 'terser',
-    terserOptions: {
+    // Terser type definitions can conflict with some TS setups. Cast to `any`
+    // so we can keep `drop_console` without a type error.
+    terserOptions: ({
       compress: {
         drop_console: true, // Remove console logs in production
       },
-    },
+    } as any),
     // Code splitting for better performance
     rollupOptions: {
       output: {
