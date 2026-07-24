@@ -8,6 +8,18 @@ export interface Project {
   imageUrl?: string;
 }
 
+export interface BlogPost {
+  slug: string;
+  title: string;
+  date: string;
+  description: string;
+  tags: string[];
+  author?: string;
+  draft: boolean;
+  html: string;
+  readingTime: number;
+}
+
 export interface OpenSourceContribution {
   id: string;
   repo: string;
