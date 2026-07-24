@@ -2,6 +2,19 @@ import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getPost, formatDate } from '../blog';
 
+// The plain text-slate-*/dark:text-slate-* utilities repeat the colours
+// prose-invert already sets. They sit in the utilities layer, so they still
+// apply if @tailwindcss/typography isn't loaded — without them a missing plugin
+// leaves black body text on the dark background.
+const PROSE_CLASSES = [
+  'prose prose-slate dark:prose-invert max-w-none',
+  'text-slate-700 dark:text-slate-300',
+  'prose-headings:font-bold prose-headings:text-slate-900 dark:prose-headings:text-white',
+  'prose-strong:text-slate-900 dark:prose-strong:text-white',
+  'prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline',
+  'prose-pre:bg-slate-900 dark:prose-pre:bg-slate-950 prose-pre:border prose-pre:border-slate-700',
+].join(' ');
+
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
   const post = slug ? getPost(slug) : undefined;
@@ -88,7 +101,7 @@ export default function BlogPost() {
 
         {/* Markdown is first-party content from content/posts/, rendered by marked. */}
         <div
-          className="prose prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline prose-pre:bg-slate-900 dark:prose-pre:bg-slate-950 prose-pre:border prose-pre:border-slate-700"
+          className={PROSE_CLASSES}
           dangerouslySetInnerHTML={{ __html: post.html }}
         />
       </article>
