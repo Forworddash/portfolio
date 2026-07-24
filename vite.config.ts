@@ -1,10 +1,26 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { copyFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+
+// GitHub Pages has no SPA fallback, so a deep link like /portfolio/blog/my-post
+// would 404 on refresh. Serving a copy of index.html as 404.html hands those
+// requests to the router instead.
+function githubPagesSpaFallback() {
+  return {
+    name: 'gh-pages-spa-fallback',
+    apply: 'build' as const,
+    closeBundle() {
+      const dist = fileURLToPath(new URL('./dist/', import.meta.url));
+      copyFileSync(`${dist}index.html`, `${dist}404.html`);
+    },
+  };
+}
 
 // https://vite.dev/config/
 export default defineConfig({
   base: '/portfolio/',
-  plugins: [react()],
+  plugins: [react(), githubPagesSpaFallback()],
   build: {
     // Optimize for production
     minify: 'terser',

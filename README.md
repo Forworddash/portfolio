@@ -8,6 +8,7 @@ A modern, high-performance portfolio website built with React, TypeScript, and T
 - **About Section** with profile image and introduction
 - **Projects Section** with filtering by programming language tags
 - **Open Source Contributions** section with GitHub links
+- **Markdown Blog** — drop a `.md` file in `content/posts/`, commit, and it publishes
 - **Responsive Design** optimized for all devices
 - **Performance Optimized** with code splitting and lazy loading
 - **Security Headers** implemented for production
@@ -80,6 +81,68 @@ export const projects: Project[] = [
   // Add more projects...
 ];
 ```
+
+## ✍️ Writing Blog Posts
+
+Every `.md` file under `content/posts/` becomes a post. There is no CMS and no
+database — Vite inlines the markdown at build time, so publishing is just
+committing a file.
+
+```bash
+# 1. Write the post
+vim content/posts/2026-08-01-my-new-post.md
+
+# 2. Commit and push — GitHub Actions builds and deploys it
+git add content/posts/2026-08-01-my-new-post.md
+git commit -m "new post"
+git push
+```
+
+### Frontmatter
+
+```markdown
+---
+title: My New Post
+date: 2026-08-01
+description: A short summary used in the post list.
+tags: [Rust, Parsing]
+author: Sam        # optional
+draft: false       # optional, drafts are dev-only
+---
+
+Write the body in **GitHub-flavored markdown**.
+```
+
+Every field is optional and falls back to something sensible:
+
+| Field | Default if omitted |
+| --- | --- |
+| `title` | the first `#` heading, then the filename |
+| `date` | the `YYYY-MM-DD-` prefix on the filename |
+| `description` | the first paragraph of the body |
+| `slug` | the filename, minus any date prefix |
+| `tags` | none |
+| `draft` | `false` |
+
+`2026-08-01-my-new-post.md` publishes at `/blog/my-new-post` — the date prefix
+sorts the directory chronologically without appearing in the URL.
+
+Posts with `draft: true` are visible under `npm run dev` but stripped from
+production builds.
+
+### How it works
+
+| File | Purpose |
+| --- | --- |
+| `content/posts/*.md` | the posts themselves |
+| `src/blog.ts` | glob import, frontmatter parsing, markdown rendering |
+| `src/components/Blog.tsx` | the post list at `/blog` |
+| `src/components/BlogPost.tsx` | a single post at `/blog/:slug` |
+
+Markdown is rendered with [marked](https://marked.js.org) and styled with
+`@tailwindcss/typography`. Post content is trusted first-party markdown from this
+repository, so it is injected without a sanitizer — if you ever accept posts from
+outside contributors, add `dompurify` in `src/components/BlogPost.tsx`.
 
 ## 🚢 Deployment
 

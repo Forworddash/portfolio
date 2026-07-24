@@ -1,9 +1,17 @@
 import { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDarkMode } from '../hooks/useDarkMode';
+
+interface ScrollState {
+  scrollTo?: string;
+}
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const { isDark, toggleDarkMode } = useDarkMode();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isHome = location.pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -14,11 +22,23 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Arriving home from another route: scroll once the sections have mounted.
+  useEffect(() => {
+    const target = (location.state as ScrollState | null)?.scrollTo;
+    if (!isHome || !target) return;
+
+    requestAnimationFrame(() => {
+      document.getElementById(target)?.scrollIntoView({ behavior: 'smooth' });
+    });
+    navigate('/', { replace: true, state: null });
+  }, [isHome, location.state, navigate]);
+
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    if (!isHome) {
+      navigate('/', { state: { scrollTo: id } });
+      return;
     }
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -52,14 +72,16 @@ export default function Header() {
             </button>
           ))}
           
-          <a
-            href="#"
+          <Link
+            to="/blog"
             className={`text-sm font-medium transition-colors hover:text-blue-600 dark:hover:text-blue-400 ${
-              scrolled ? 'text-slate-700 dark:text-slate-300' : 'text-slate-700 dark:text-slate-300'
+              location.pathname.startsWith('/blog')
+                ? 'text-blue-600 dark:text-blue-400'
+                : 'text-slate-700 dark:text-slate-300'
             }`}
           >
             Blog
-          </a>
+          </Link>
           
           <button
             onClick={toggleDarkMode}
