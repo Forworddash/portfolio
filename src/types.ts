@@ -6,6 +6,11 @@ export interface Project {
   githubUrl: string;
   liveUrl?: string;
   imageUrl?: string;
+  // Shown only in the detail modal. `details` is a longer write-up (paragraphs
+  // split on blank lines); `highlights` is a feature/bullet list. Both optional
+  // so a project with nothing extra still opens with its card description.
+  details?: string;
+  highlights?: string[];
 }
 
 export interface BlogPost {

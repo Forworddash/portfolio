@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { projects } from '../data';
 import type { Project } from '../types';
+import ProjectModal from './ProjectModal';
 
 interface ProjectsProps {
   id?: string;
@@ -10,6 +11,7 @@ export default function Projects({ id = 'projects' }: ProjectsProps) {
   const [selectedTag, setSelectedTag] = useState<string>('All');
   const [filteredProjects, setFilteredProjects] = useState<Project[]>(projects);
   const [isVisible, setIsVisible] = useState(false);
+  const [activeProject, setActiveProject] = useState<Project | null>(null);
 
   // Get all unique tags
   const allTags = ['All', ...new Set(projects.flatMap((p) => p.tags))].sort();
@@ -69,7 +71,17 @@ export default function Projects({ id = 'projects' }: ProjectsProps) {
           {filteredProjects.map((project, index) => (
             <div
               key={project.id}
-              className="group bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+              onClick={() => setActiveProject(project)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setActiveProject(project);
+                }
+              }}
+              role="button"
+              tabIndex={0}
+              aria-label={`View details for ${project.title}`}
+              className="group cursor-pointer bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900"
               style={{
                 animationDelay: `${index * 100}ms`,
                 animation: 'slideUp 0.5s ease-out forwards',
@@ -117,11 +129,12 @@ export default function Projects({ id = 'projects' }: ProjectsProps) {
                 </div>
 
                 {/* Links */}
-                <div className="flex gap-3">
+                <div className="flex items-center gap-3">
                   <a
                     href={project.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
                     className="flex items-center gap-1 text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
                   >
                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -136,6 +149,7 @@ export default function Projects({ id = 'projects' }: ProjectsProps) {
                         href={project.liveUrl}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
                         className="flex items-center gap-1 text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
                       >
                         <svg
@@ -155,11 +169,34 @@ export default function Projects({ id = 'projects' }: ProjectsProps) {
                       </a>
                     </>
                   )}
+
+                  {/* Nudge toward the detail modal; the whole card is clickable. */}
+                  <span className="ml-auto flex items-center gap-1 text-sm font-medium text-slate-400 dark:text-slate-500 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                    Details
+                    <svg
+                      className="w-4 h-4 transition-transform group-hover:translate-x-0.5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </span>
                 </div>
               </div>
             </div>
           ))}
         </div>
+
+        {/* Detail modal */}
+        {activeProject && (
+          <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />
+        )}
 
         {/* Empty State */}
         {filteredProjects.length === 0 && (
