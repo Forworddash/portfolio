@@ -91,6 +91,28 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             ))}
           </div>
 
+          {/* Screenshots */}
+          {project.images && project.images.length > 0 && (
+            <div className="grid gap-4 mt-6 sm:grid-cols-2">
+              {project.images.map((src, i) => (
+                <a
+                  key={src}
+                  href={src}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700"
+                >
+                  <img
+                    src={src}
+                    alt={`${project.title} screenshot ${i + 1}`}
+                    loading="lazy"
+                    className="w-full h-auto"
+                  />
+                </a>
+              ))}
+            </div>
+          )}
+
           {/* Highlights */}
           {project.highlights && project.highlights.length > 0 && (
             <div className="mt-6">

@@ -1,4 +1,6 @@
 import type { Project, OpenSourceContribution } from './types';
+import parsnip1 from './assets/parsnip-1.png';
+import parsnip2 from './assets/parsnip-2.png';
 
 export const projects: Project[] = [
   {
@@ -25,6 +27,7 @@ export const projects: Project[] = [
     tags: ['Rust', 'Parsing', 'EDI', 'JSON'],
     githubUrl: 'https://github.com/Forworddash/Parsnip',
     liveUrl: '',
+    images: [parsnip1, parsnip2],
     details:
       'A complete, high-performance Rust solution for parsing and translating X12 and EDIFACT EDI formats into business-ready JSON. Built for production EDI SaaS platforms and enterprise integration needs.\n\nThe pipeline runs from raw text through a four-layer structural parser (interchange envelopes, functional groups, transaction sets, and segment/element parsing) into a translation layer that converts EDI structure into clean business JSON. Transaction-specific translators handle 850 Purchase Orders, 810 Invoices, and 997 Functional Acknowledgments, with a generic fallback for unknown types.\n\nThe design keeps concerns strictly separate: the parser knows nothing about business rules, the translator knows nothing about parsing mechanics, and standard modules stay loosely coupled. Schema-driven validation layers are the next milestone.',
     highlights: [

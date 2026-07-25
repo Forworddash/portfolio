@@ -11,6 +11,9 @@ export interface Project {
   // so a project with nothing extra still opens with its card description.
   details?: string;
   highlights?: string[];
+  // Screenshots shown in the modal. Import them from src/assets so Vite hashes
+  // the files and rewrites the URLs for the /portfolio/ base path.
+  images?: string[];
 }
 
 export interface BlogPost {
