@@ -5,6 +5,7 @@ import md2blog1 from './assets/md2blog-1.png';
 import crunchpdf1 from './assets/crunchpdf-1.png';
 import crunchpdf2 from './assets/crunchpdf-2.png';
 import crunchpdf3 from './assets/crunchpdf-3.png';
+import kanaBanana1 from './assets/kanabanana-1.png';
 
 export const projects: Project[] = [
   {
@@ -51,6 +52,7 @@ export const projects: Project[] = [
     tags: ['TypeScript', 'React', 'Vite', 'Drag & Drop'],
     githubUrl: 'https://github.com/Forworddash/KanaBanana',
     liveUrl: '',
+    images: [kanaBanana1],
     details:
       'A tiny Kanban board built with React, TypeScript, and Vite, with drag-and-drop by @dnd-kit and everything saved to localStorage — refresh-safe, with migration from an earlier single-board format.\n\nCards open a detail modal with a description, due date, and a checklist that drives a progress bar; badges on each card surface due dates, checklists, and notes at a glance. Drag reorders cards, moves them between columns, and reorders whole columns. Multiple boards live in header tabs.\n\nUndo/redo is the interesting part. Drag gestures fire many intermediate updates, so the history hook exposes a "replace" for the live drag and folds the whole gesture into a single undo step on drop — only if something actually moved.',
     highlights: [
