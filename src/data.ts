@@ -6,6 +6,8 @@ import crunchpdf1 from './assets/crunchpdf-1.png';
 import crunchpdf2 from './assets/crunchpdf-2.png';
 import crunchpdf3 from './assets/crunchpdf-3.png';
 import kanaBanana1 from './assets/kanabanana-1.png';
+import twtm1 from './assets/twtm-1.png';
+import twtm2 from './assets/twtm-2.png';
 
 export const projects: Project[] = [
   {
@@ -104,6 +106,7 @@ export const projects: Project[] = [
   {
     id: '1',
     title: 'Travel Blog',
+    images: [twtm1, twtm2],
     description: 'Full-stack travel blog built with Hugo and TypeScript, featuring a custom admin portal for content management. Deployed on Netlify with a focus on performance, security, and developer experience.',
     tags: ['TypeScript', 'React', 'Node.js', 'Netlify'],
     githubUrl: 'https://github.com/Forworddash',
