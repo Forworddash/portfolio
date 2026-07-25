@@ -1,6 +1,7 @@
 import type { Project, OpenSourceContribution } from './types';
 import parsnip1 from './assets/parsnip-1.png';
 import parsnip2 from './assets/parsnip-2.png';
+import md2blog1 from './assets/md2blog-1.png';
 
 export const projects: Project[] = [
   {
@@ -81,6 +82,7 @@ export const projects: Project[] = [
     title: 'Markdown2Blog',
     description: 'A markdown-to-blog static site generator in TypeScript. Turns a folder of frontmatter-tagged markdown files into a static site with post pages, tag pages, and an RSS feed, deriving titles, excerpts, and slugs when they are omitted.',
     tags: ['TypeScript', 'Node.js', 'Static Site', 'CLI'],
+    images: [md2blog1],
     githubUrl: 'https://github.com/Forworddash/Markdown2Blog',
     liveUrl: '',
     details:
