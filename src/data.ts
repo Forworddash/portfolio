@@ -2,6 +2,9 @@ import type { Project, OpenSourceContribution } from './types';
 import parsnip1 from './assets/parsnip-1.png';
 import parsnip2 from './assets/parsnip-2.png';
 import md2blog1 from './assets/md2blog-1.png';
+import crunchpdf1 from './assets/crunchpdf-1.png';
+import crunchpdf2 from './assets/crunchpdf-2.png';
+import crunchpdf3 from './assets/crunchpdf-3.png';
 
 export const projects: Project[] = [
   {
@@ -11,6 +14,7 @@ export const projects: Project[] = [
     tags: ['TypeScript', 'WebAssembly', 'Web Workers', 'Vite'],
     githubUrl: 'https://github.com/Forworddash/CrunchPDF',
     liveUrl: '',
+    images: [crunchpdf1, crunchpdf2, crunchpdf3],
     details:
       'PDF tools that run entirely in the browser — your files are never uploaded. The site is fully static, so there is no server that could receive a document in the first place.\n\nCompression runs client-side in WebAssembly inside a Web Worker. The engine sits behind a narrow interface and is resolved lazily, today to Ghostscript compiled to WASM. The ~16MB engine is fetched on first use and cached by the browser, so it is never part of the initial page load.\n\nThe licensing seam is deliberate: only src/engines/ghostscript touches the AGPL dependency, and a CI check enforces the boundary. That means the compressor can be swapped for a permissively-licensed engine by pointing the registry at a different module, without rewriting the app.',
     highlights: [
