@@ -8,10 +8,13 @@ import crunchpdf3 from './assets/crunchpdf-3.png';
 import kanaBanana1 from './assets/kanabanana-1.png';
 import twtm1 from './assets/twtm-1.png';
 import twtm2 from './assets/twtm-2.png';
+import bookme1 from './assets/bookme-1.png';
+import bookme2 from './assets/bookme-2.png';
+import bookme3 from './assets/bookme-3.png';
 
 export const projects: Project[] = [
   {
-    id: '5',
+    id: '6',
     title: 'CrunchPDF',
     description: 'Browser-based PDF tools with no backend and no upload path. Compression runs client-side via Ghostscript compiled to WebAssembly inside a Web Worker, behind a swappable engine interface so the AGPL dependency stays isolated to one directory (enforced in CI).',
     tags: ['TypeScript', 'WebAssembly', 'Web Workers', 'Vite'],
@@ -29,7 +32,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: '6',
+    id: '7',
     title: 'Parsnip',
     description: 'A high-performance EDI parser and translation engine in Rust. Parses X12 and EDIFACT through a four-layer structural pipeline, then translates to business JSON (850 POs, 810 Invoices, 997 Acks) at ~1.6µs per document, with streaming support for files larger than memory.',
     tags: ['Rust', 'Parsing', 'EDI', 'JSON'],
@@ -48,7 +51,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: '7',
+    id: '8',
     title: 'KanaBanana',
     description: 'A Kanban board built with React, TypeScript, and @dnd-kit. Supports multiple boards, drag-and-drop for both cards and columns, card detail modals with checklists and due dates, undo/redo, JSON export/import, and localStorage persistence.',
     tags: ['TypeScript', 'React', 'Vite', 'Drag & Drop'],
@@ -68,7 +71,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: '8',
+    id: '9',
     title: 'RegexInt',
     description: 'A regular-expression interpreter written from scratch in TypeScript. Tokenizes and parses patterns into an AST with a recursive-descent parser, then matches input using a continuation-passing backtracking engine — the same design as PCRE-style engines.',
     tags: ['TypeScript', 'Parsing', 'CLI'],
@@ -86,7 +89,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: '9',
+    id: '10',
     title: 'Markdown2Blog',
     description: 'A markdown-to-blog static site generator in TypeScript. Turns a folder of frontmatter-tagged markdown files into a static site with post pages, tag pages, and an RSS feed, deriving titles, excerpts, and slugs when they are omitted.',
     tags: ['TypeScript', 'Node.js', 'Static Site', 'CLI'],
@@ -122,6 +125,28 @@ export const projects: Project[] = [
   },
   {
     id: '3',
+    title: 'Bookme',
+    description:
+      'An embeddable booking widget for solo service pros — stylists, tutors, coaches. One script tag drops a booking flow onto any WordPress, Squarespace, Webflow, or Shopify site. Built with Next.js, TypeScript, Postgres, and Prisma, around a timezone- and DST-correct availability engine.',
+    tags: ['TypeScript', 'Next.js', 'Postgres', 'Prisma'],
+    githubUrl: 'https://github.com/Forworddash/Bookme',
+    liveUrl: '',
+    images: [bookme1, bookme2, bookme3],
+    details:
+      'A hosted booking widget that embeds anywhere. The pro pastes a div and a script tag; the script reads its own src to find the origin, injects a same-origin iframe, and keeps it exactly as tall as its content over postMessage — no inner scrollbar, which is the clearest tell that an embed is broken. The iframe boundary means it cannot collide with the host site\'s CSS, so it renders identically on a hand-rolled WordPress theme and a Squarespace template.\n\nVisitors pick a service, see real availability in their own timezone, and book. Availability is computed from weekly recurring rules, per-date overrides, existing bookings, and per-service buffers, then filtered by minimum notice and how far ahead the calendar is open.\n\nThe slot engine is the interesting part. Availability is wall-clock in the pro\'s timezone, so "9am Tuesday" survives a DST change, while bookings are absolute UTC instants — mixing the two is the bug that silently shifts a calendar by an hour twice a year. On spring-forward day a 9-to-5 window genuinely holds one hour fewer; on fall-back, 1:00am happens twice and both are bookable. Buffers between appointments resolve as the max of the two adjacent values rather than the sum, which is the tempting implementation and quietly eats bookable time all day.\n\nThe engine is pure functions with the clock injected, covered by 31 tests that need no database. Booking correctness rests on a partial unique index — UNIQUE (proId, startsAt) WHERE status <> \'CANCELLED\' — since a plain unique constraint would let one cancelled booking block that slot forever. The availability query is advisory; two visitors can be shown the same open slot, and the index decides who wins while the loser gets a 409 and a refreshed grid.',
+    highlights: [
+      'One-script-tag embed with postMessage height handshake',
+      'DST-correct slot engine: wall-clock availability, UTC bookings',
+      'Per-service buffers resolved as max, not sum',
+      'Weekly rules, per-date overrides, notice and advance windows',
+      'Visitor-timezone detection and display',
+      'Partial unique index prevents double booking; 409 on lost races',
+      'Server-side re-validation of every requested slot',
+      '31 tests over the availability engine, no DB required',
+    ],
+  },
+  {
+    id: '4',
     title: 'Voice Modulator',
     description: 'A real-time voice modulation application built in Rust. It captures audio input from the microphone, applies various voice effects, and plays the modified audio through the speakers with minimal latency.',
     tags: ['Rust', 'Audio Processing', 'Real-time', 'CLI'],
@@ -129,7 +154,7 @@ export const projects: Project[] = [
     liveUrl: '',
   },
   {
-    id: '4',
+    id: '5',
     title: 'P2P File Sharing App',
     description: 'The Python project is a P2P (peer-to-peer) file transfer system comprising two main components: a server and a client. The project utilizes Python and the Tkinter library for creating a simple graphical user interface (GUI) for the client.',
     tags: ['Python', 'Tkinter', 'Socket Programming'],
