@@ -1,0 +1,898 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Sample EDI compliance audit deliverable — 856/810/997 defect findings, ranked by annualized deduction impact. Synthetic data; real failure modes."
+    />
+    <meta name="author" content="Samuel Baker" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <link rel="icon" type="image/svg+xml" href="/portfolio/vite.svg" />
+    <title>EDI Compliance Audit — sample deliverable</title>
+
+    <style>
+      /* ---------------------------------------------------------------
+     Tokens. Bare :root carries the complete light palette. Dark is
+     redefined twice — once for the un-stamped system-preference state
+     (guarded so an explicit light choice wins) and once for the
+     explicit dark stamp. Components only ever read tokens.
+     --------------------------------------------------------------- */
+      :root {
+        --ground: #ffffff;
+        --surface: #f5f8fa;
+        --surface-2: #eef3f7;
+        --rule: #dde5ec;
+        --rule-strong: #131a22;
+        --ink: #131a22;
+        --muted: #5c6a78;
+        --faint: #8695a4;
+        --accent: #1e4d8c;
+        --accent-soft: #e8f0f9;
+        --high: #b3261e;
+        --high-soft: #fbeae8;
+        --med: #8a5d0b;
+        --med-soft: #fbf1de;
+        --note: #7a5308;
+        --note-bg: #fdf6e7;
+        --note-rule: #e8d5a8;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme='light']) {
+          --ground: #0d1218;
+          --surface: #151d26;
+          --surface-2: #1b2530;
+          --rule: #24303d;
+          --rule-strong: #48596b;
+          --ink: #e6ecf2;
+          --muted: #97a6b6;
+          --faint: #71818f;
+          --accent: #6aa3e8;
+          --accent-soft: #16263a;
+          --high: #f2938a;
+          --high-soft: #2e1b19;
+          --med: #e0aa4d;
+          --med-soft: #2c2415;
+          --note: #e0c483;
+          --note-bg: #241f14;
+          --note-rule: #4a3d20;
+        }
+      }
+
+      :root[data-theme='dark'] {
+        --ground: #0d1218;
+        --surface: #151d26;
+        --surface-2: #1b2530;
+        --rule: #24303d;
+        --rule-strong: #48596b;
+        --ink: #e6ecf2;
+        --muted: #97a6b6;
+        --faint: #71818f;
+        --accent: #6aa3e8;
+        --accent-soft: #16263a;
+        --high: #f2938a;
+        --high-soft: #2e1b19;
+        --med: #e0aa4d;
+        --med-soft: #2c2415;
+        --note: #e0c483;
+        --note-bg: #241f14;
+        --note-rule: #4a3d20;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--ground);
+        color: var(--ink);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
+        font-size: 17px;
+        line-height: 1.62;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .wrap {
+        max-width: 47rem;
+        margin: 0 auto;
+        padding: 40px 24px 96px;
+        display: flex;
+        flex-direction: column;
+        gap: 34px;
+      }
+
+      /* --- Type ------------------------------------------------------ */
+
+      h1,
+      h2 {
+        font-family: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+        font-weight: 600;
+        letter-spacing: -0.012em;
+        text-wrap: balance;
+        margin: 0;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 5vw, 2.7rem);
+        line-height: 1.12;
+      }
+
+      h2 {
+        font-size: 1.32rem;
+        line-height: 1.25;
+        padding-bottom: 9px;
+        border-bottom: 1.5px solid var(--rule-strong);
+      }
+
+      h3 {
+        font-size: 1rem;
+        font-weight: 650;
+        margin: 0;
+      }
+
+      p {
+        margin: 0;
+      }
+
+      section {
+        display: flex;
+        flex-direction: column;
+        gap: 13px;
+      }
+
+      .eyebrow {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .faint {
+        color: var(--faint);
+        font-size: 0.86rem;
+      }
+
+      code,
+      .mono {
+        font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+        font-size: 0.86em;
+      }
+
+      code {
+        background: var(--surface-2);
+        padding: 1px 5px;
+        border-radius: 3px;
+      }
+
+      strong {
+        font-weight: 650;
+      }
+
+      a {
+        color: var(--accent);
+        text-underline-offset: 3px;
+      }
+
+      a:focus-visible,
+      summary:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+        border-radius: 2px;
+      }
+
+      /* --- Sample notice --------------------------------------------- */
+
+      .notice {
+        background: var(--note-bg);
+        border: 1px solid var(--note-rule);
+        color: var(--note);
+        border-radius: 6px;
+        padding: 13px 17px;
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+
+      /* --- Masthead --------------------------------------------------- */
+
+      .masthead {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        border-left: 4px solid var(--accent);
+        padding-left: 22px;
+      }
+
+      .meta {
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        gap: 5px 20px;
+        font-size: 0.92rem;
+        color: var(--muted);
+      }
+
+      .meta dt {
+        font-weight: 650;
+        color: var(--ink);
+      }
+
+      .meta dd {
+        margin: 0;
+      }
+
+      /* --- Headline figure -------------------------------------------- */
+
+      .figure-card {
+        background: var(--surface);
+        border: 1px solid var(--rule);
+        border-left: 4px solid var(--accent);
+        border-radius: 0 7px 7px 0;
+        padding: 22px 26px;
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+
+      .figure-card__value {
+        font-size: clamp(2.2rem, 6vw, 3rem);
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        line-height: 1;
+        color: var(--accent);
+        font-variant-numeric: tabular-nums;
+      }
+
+      .figure-card__label {
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+
+      /* --- Table ------------------------------------------------------ */
+
+      .scroller {
+        overflow-x: auto;
+        border-bottom: 1px solid var(--rule);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.92rem;
+        min-width: 33rem;
+      }
+
+      th {
+        text-align: left;
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+        padding: 0 12px 9px 0;
+        border-bottom: 1.5px solid var(--rule-strong);
+        white-space: nowrap;
+      }
+
+      td {
+        padding: 11px 12px 11px 0;
+        border-bottom: 1px solid var(--rule);
+        vertical-align: top;
+      }
+
+      tbody tr:last-child td {
+        border-bottom: none;
+      }
+
+      .num {
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+        font-weight: 650;
+        white-space: nowrap;
+      }
+
+      .rank {
+        font-weight: 700;
+        color: var(--accent);
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* --- Findings ---------------------------------------------------- */
+
+      .finding {
+        border: 1px solid var(--rule);
+        border-left: 4px solid var(--sev, var(--accent));
+        border-radius: 0 7px 7px 0;
+        padding: 20px 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        background: var(--ground);
+      }
+
+      .finding--high {
+        --sev: var(--high);
+      }
+      .finding--med {
+        --sev: var(--med);
+      }
+
+      .finding__head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 10px;
+        margin-bottom: 4px;
+      }
+
+      .finding__no {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--sev, var(--accent));
+      }
+
+      .finding__title {
+        font-size: 1.08rem;
+        font-weight: 650;
+        letter-spacing: -0.008em;
+        flex: 1 1 16rem;
+      }
+
+      .finding__meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 8px 0 12px;
+      }
+
+      .chip {
+        font-size: 0.76rem;
+        font-weight: 650;
+        padding: 3px 10px;
+        border-radius: 3px;
+        background: var(--surface-2);
+        color: var(--muted);
+        white-space: nowrap;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .chip--high {
+        background: var(--high-soft);
+        color: var(--high);
+      }
+      .chip--med {
+        background: var(--med-soft);
+        color: var(--med);
+      }
+
+      .label {
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-top: 12px;
+      }
+
+      .finding p {
+        font-size: 0.97rem;
+        line-height: 1.58;
+      }
+
+      /* --- Appendix disclosure ---------------------------------------- */
+
+      details {
+        border: 1px solid var(--rule);
+        border-radius: 7px;
+        background: var(--surface);
+      }
+
+      summary {
+        cursor: pointer;
+        padding: 14px 20px;
+        font-weight: 650;
+        font-size: 0.95rem;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      summary::-webkit-details-marker {
+        display: none;
+      }
+
+      summary::before {
+        content: '+';
+        font-family: ui-monospace, monospace;
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      details[open] summary::before {
+        content: '−';
+      }
+
+      .details__body {
+        padding: 0 20px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      /* --- Footer ------------------------------------------------------ */
+
+      .colophon {
+        border-top: 1px solid var(--rule);
+        padding-top: 22px;
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+        font-size: 0.92rem;
+        color: var(--muted);
+      }
+
+      .colophon strong {
+        color: var(--ink);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="notice">
+        <strong>This is a work sample.</strong> Northline Housewares is a fictional company; every
+        figure, document ID and deduction amount below is synthetic. The compliance thresholds and
+        failure modes described are real. This is what a client receives.
+      </div>
+
+      <header class="masthead">
+        <div>
+          <p class="eyebrow">Sample deliverable</p>
+          <h1>EDI Compliance Audit</h1>
+        </div>
+        <dl class="meta">
+          <dt>Prepared for</dt>
+          <dd>Northline Housewares, Inc.</dd>
+          <dt>Trading partner</dt>
+          <dd>Walmart Stores, Inc.</dd>
+          <dt>Period reviewed</dt>
+          <dd>1 April – 30 June 2026 (90 days)</dd>
+          <dt>Prepared by</dt>
+          <dd>Samuel Baker, EDI Consulting</dd>
+        </dl>
+      </header>
+
+      <section>
+        <h2>Executive summary</h2>
+        <p>
+          Over the 90 days reviewed, Northline incurred <strong>$61,240</strong> in Walmart
+          deductions. <strong>$28,385 of that — 46% — traces to four correctable EDI defects</strong>,
+          not to fulfillment or carrier performance. Annualized, those defects represent
+          <strong>$113,540</strong> in recoverable cost. None require a platform change, and the
+          largest single item is a scheduling fix.
+        </p>
+
+        <div class="figure-card">
+          <span class="figure-card__value">$113,540</span>
+          <span class="figure-card__label"
+            >Annualized recoverable cost from four correctable defects</span
+          >
+        </div>
+
+        <p>
+          Northline's OTIF score for the period was <strong>97.2%</strong>, below Walmart's 98%
+          threshold. A substantial share of that shortfall is not caused by late trucks. It is caused
+          by advance ship notices arriving after the goods they describe — which scores identically
+          to a late delivery and is invisible in the deduction coding.
+        </p>
+
+        <h3>What I'd do first</h3>
+        <p class="muted">
+          Fix Finding 1. It is the largest item by a wide margin, the effort is roughly one day of
+          work at the integration layer, and it requires no mapping changes. Finding 5 should be
+          actioned in the same window — it is unquantified only because the necessary evidence isn't
+          currently being retained, which is itself the problem.
+        </p>
+      </section>
+
+      <section>
+        <h2>Findings, ranked by impact</h2>
+        <div class="scroller">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Finding</th>
+                <th scope="col">Doc</th>
+                <th scope="col">Severity</th>
+                <th scope="col">Effort</th>
+                <th scope="col" class="num">Annualized</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="rank">1</td>
+                <td>ASN transmitted after DC receipt on cross-dock lanes</td>
+                <td><code>856</code></td>
+                <td>High</td>
+                <td>Low</td>
+                <td class="num">$71,200</td>
+              </tr>
+              <tr>
+                <td class="rank">2</td>
+                <td>ASN case counts sourced from pick list, not packed quantity</td>
+                <td><code>856</code></td>
+                <td>High</td>
+                <td>Medium</td>
+                <td class="num">$18,440</td>
+              </tr>
+              <tr>
+                <td class="rank">3</td>
+                <td>GTINs not updated after packaging change on three SKUs</td>
+                <td><code>856</code> <code>810</code></td>
+                <td>Medium</td>
+                <td>Low</td>
+                <td class="num">$14,300</td>
+              </tr>
+              <tr>
+                <td class="rank">4</td>
+                <td>Invoice line references don't match the originating PO</td>
+                <td><code>810</code></td>
+                <td>Medium</td>
+                <td>Medium</td>
+                <td class="num">$9,600</td>
+              </tr>
+              <tr>
+                <td class="rank">5</td>
+                <td>4% of outbound documents never acknowledged</td>
+                <td><code>997</code></td>
+                <td>High</td>
+                <td>Low</td>
+                <td class="num">Unquantified</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <h2>The findings in full</h2>
+
+        <article class="finding finding--high">
+          <div class="finding__head">
+            <span class="finding__no">01</span>
+            <span class="finding__title">ASN transmitted after DC receipt on cross-dock lanes</span>
+          </div>
+          <div class="finding__meta">
+            <span class="chip chip--high">High severity</span>
+            <span class="chip">$71,200 / yr</span>
+            <span class="chip">Low effort</span>
+            <span class="chip">Owner: EDI vendor</span>
+          </div>
+
+          <p class="label">What's happening</p>
+          <p>
+            On three cross-dock lanes, the 856 is generated by a nightly batch at 23:00. Those
+            shipments reach the DC in under six hours, so the ASN routinely arrives after the goods
+            do.
+          </p>
+
+          <p class="label">Evidence</p>
+          <p>
+            212 of 1,208 ASNs transmitted after DC receipt; 189 of those on lanes 4412, 4418 and
+            4501. Matching deductions coded to delivery compliance total <strong>$17,800</strong>
+            over the period. Sampled ASN 0004412: shipment departed 14:20, ASN transmitted 23:04, DC
+            receipt logged 19:47 — the ASN arrived more than three hours after the freight.
+          </p>
+
+          <p class="label">Root cause</p>
+          <p>
+            ASN generation runs on a fixed nightly schedule rather than firing on ship-confirm. That
+            works for two-day lanes and cannot work for cross-dock, where transit time is shorter
+            than the gap to the next batch window. Nothing is wrong with the map.
+          </p>
+
+          <p class="label">Business impact</p>
+          <p>
+            $17,800 per quarter, roughly <strong>$71,200 annually</strong>. These deductions present
+            as delivery failures and are therefore being escalated to the carrier and the 3PL, where
+            no fix is possible. Every one of these trucks was on time.
+          </p>
+
+          <p class="label">Fix</p>
+          <p>
+            Trigger the 856 on ship-confirm for cross-dock lanes rather than on the nightly batch. No
+            mapping change is required — this is scheduling only. If the batch cannot be made
+            event-driven, an interim fix is a second intra-day run at 15:00 covering cross-dock
+            lanes, which addresses most of the exposure.
+          </p>
+        </article>
+
+        <article class="finding finding--high">
+          <div class="finding__head">
+            <span class="finding__no">02</span>
+            <span class="finding__title"
+              >ASN case counts sourced from pick list, not packed quantity</span
+            >
+          </div>
+          <div class="finding__meta">
+            <span class="chip chip--high">High severity</span>
+            <span class="chip">$18,440 / yr</span>
+            <span class="chip">Medium effort</span>
+            <span class="chip">Owner: Warehouse systems</span>
+          </div>
+
+          <p class="label">What's happening</p>
+          <p>
+            ASNs report the quantity that was supposed to ship rather than what physically shipped.
+            Whenever a short-pick occurs, the ASN overstates the shipment and Walmart's receiving
+            scan disagrees with it.
+          </p>
+
+          <p class="label">Evidence</p>
+          <p>
+            143 of 1,208 ASNs showed a quantity variance at receipt. Corresponding deductions at
+            $0.25 per case over/under total <strong>$4,610</strong> for the period. Sampled ASN
+            0004488 declared 48 cases against PO 8842119; the receiving report shows 44. The pick
+            ticket records a 4-case short-pick that the ASN never reflected.
+          </p>
+
+          <p class="label">Root cause</p>
+          <p>
+            The ASN is generated at pick-release rather than pack-confirm. <code>SN1</code> element
+            02 is populated from the ordered quantity on the inbound 850 rather than from the
+            confirmed packed quantity in the WMS. Nothing re-reads the shipment after packing, so any
+            variance introduced during picking is invisible to the ASN.
+          </p>
+
+          <p class="label">Business impact</p>
+          <p>
+            Approximately <strong>$18,440 annually</strong> in direct deductions. The larger cost is
+            indirect: quantity variances degrade the in-full component of OTIF, contributing to the
+            97.2% score and exposure to the 3%-of-COGS penalty on non-compliant shipments.
+          </p>
+
+          <p class="label">Fix</p>
+          <p>
+            Move ASN generation to fire on pack-confirm and source <code>SN1</code> 02 from the WMS
+            confirmed quantity. If the ERP cannot defer generation, the interim control is a
+            pre-transmission check that blocks any ASN whose <code>SN1</code> totals do not reconcile
+            to the shipment record.
+          </p>
+        </article>
+
+        <article class="finding finding--med">
+          <div class="finding__head">
+            <span class="finding__no">03</span>
+            <span class="finding__title">GTINs not updated after packaging change on three SKUs</span>
+          </div>
+          <div class="finding__meta">
+            <span class="chip chip--med">Medium severity</span>
+            <span class="chip">$14,300 / yr</span>
+            <span class="chip">Low effort</span>
+            <span class="chip">Owner: Master data</span>
+          </div>
+
+          <p class="label">What's happening</p>
+          <p>
+            Three SKUs moved from 12-count to 6-count inner packs in March. Walmart's item file and
+            the ERP item master were both updated. The EDI translator's item cross-reference was not,
+            so outbound documents still carry the retired GTINs.
+          </p>
+
+          <p class="label">Evidence</p>
+          <p>
+            84 ASNs and 82 invoices in the period carried retired GTINs for SKUs NH-2201, NH-2204 and
+            NH-2209. Deductions coded to item/UPC discrepancy total <strong>$3,575</strong>.
+          </p>
+
+          <p class="label">Root cause</p>
+          <p>
+            The translator maintains its own item cross-reference table, updated manually and
+            independently of the ERP item master. The March packaging change followed a checklist
+            that does not include the translator table.
+          </p>
+
+          <p class="label">Fix</p>
+          <p>
+            Point the translator's cross-reference at the ERP item master so there is a single source
+            of truth. Where that isn't feasible, add the translator table to the packaging-change
+            checklist and add a pre-transmission check that rejects any GTIN absent from the current
+            retailer item file. Without this, the problem recurs with every future packaging change.
+          </p>
+        </article>
+
+        <article class="finding finding--med">
+          <div class="finding__head">
+            <span class="finding__no">04</span>
+            <span class="finding__title">Invoice line references don't match the originating PO</span>
+          </div>
+          <div class="finding__meta">
+            <span class="chip chip--med">Medium severity</span>
+            <span class="chip">$9,600 / yr</span>
+            <span class="chip">Medium effort</span>
+            <span class="chip">Owner: EDI vendor</span>
+          </div>
+
+          <p class="label">What's happening</p>
+          <p>
+            810 invoices renumber their lines sequentially instead of carrying the line reference
+            from the originating 850. On a fully shipped order the numbering coincidentally aligns;
+            on a partial shipment it does not, and Walmart cannot reconcile line-for-line.
+          </p>
+
+          <p class="label">Evidence</p>
+          <p>
+            61 invoices in the period showed a line mismatch against the originating PO, all of them
+            on partially shipped orders. Deductions coded to invoice discrepancy total
+            <strong>$2,400</strong>.
+          </p>
+
+          <p class="label">Root cause</p>
+          <p>
+            <code>IT1</code> element 01 is populated with a generated sequence number rather than
+            being mapped from <code>PO1</code> element 01 of the inbound 850. The translator does not
+            retain the PO line reference through to invoicing.
+          </p>
+
+          <p class="label">Fix</p>
+          <p>
+            Persist the <code>PO1</code> 01 value from the 850 through the order record and map it to
+            <code>IT1</code> 01 at invoice generation. Note that the AR time spent researching and
+            disputing these exceeds the deduction value itself.
+          </p>
+        </article>
+
+        <article class="finding finding--high">
+          <div class="finding__head">
+            <span class="finding__no">05</span>
+            <span class="finding__title">4% of outbound documents never acknowledged</span>
+          </div>
+          <div class="finding__meta">
+            <span class="chip chip--high">High severity</span>
+            <span class="chip">Unquantified</span>
+            <span class="chip">Low effort</span>
+            <span class="chip">Owner: VAN / EDI vendor</span>
+          </div>
+
+          <p class="label">What's happening</p>
+          <p>
+            52 of 1,208 ASNs and 41 of 1,190 invoices have no corresponding 997 functional
+            acknowledgment. Nothing in the current configuration flags this, so no one is aware of
+            it.
+          </p>
+
+          <p class="label">Evidence</p>
+          <p>
+            Reconciliation of the outbound log against received 997s. The gaps cluster around 18–21
+            May and 9 June, which suggests episodes rather than a steady rate.
+          </p>
+
+          <p class="label">Root cause</p>
+          <p>
+            <strong>Cannot be determined from the data supplied.</strong> Either the documents never
+            left the VAN, or the acknowledgments were received and not retained. Both are serious and
+            they require different remedies, so this needs to be established before anything is
+            changed.
+          </p>
+
+          <p class="label">Business impact</p>
+          <p>
+            Unquantified, and potentially the largest item in this report. An unacknowledged ASN is
+            one Walmart may never have received. The resulting deduction arrives as a missing-ASN
+            penalty with no evidence trail available to dispute it — so these are both expensive and
+            unrecoverable after the fact.
+          </p>
+
+          <p class="label">Fix</p>
+          <p>
+            Enable 997 reconciliation alerting at the translator: any outbound document without a
+            matching acknowledgment within 24 hours raises an exception. Most platforms support this
+            and ship with it disabled. Then retain 997s for a rolling 24 months so the evidence
+            exists next time a deduction is disputed. This is configuration, not development — the
+            highest ratio of risk removed to work required in this report.
+          </p>
+        </article>
+      </section>
+
+      <section>
+        <h2>Appendices</h2>
+
+        <details>
+          <summary>Appendix A — Rejection code frequency</summary>
+          <div class="details__body">
+            <div class="scroller">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Code</th>
+                    <th scope="col">Meaning</th>
+                    <th scope="col" class="num">Count</th>
+                    <th scope="col">Documents</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>AK901 = R</code></td><td>Transaction set rejected</td><td class="num">18</td><td><code>856</code></td></tr>
+                  <tr><td><code>IK403 = 7</code></td><td>Invalid code value</td><td class="num">34</td><td><code>856</code></td></tr>
+                  <tr><td><code>IK403 = 1</code></td><td>Unrecognized segment ID</td><td class="num">12</td><td><code>810</code></td></tr>
+                  <tr><td><code>IK304 = I</code></td><td>Missing required segment</td><td class="num">9</td><td><code>856</code></td></tr>
+                  <tr><td><code>IK403 = 6</code></td><td>Invalid character in data element</td><td class="num">4</td><td><code>810</code></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <details>
+          <summary>Appendix B — Documents reviewed</summary>
+          <div class="details__body">
+            <div class="scroller">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Type</th>
+                    <th scope="col">Description</th>
+                    <th scope="col" class="num">Count</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>997</code></td><td>Functional acknowledgments, inbound</td><td class="num">2,321</td></tr>
+                  <tr><td><code>824</code></td><td>Application advices, inbound</td><td class="num">47</td></tr>
+                  <tr><td><code>856</code></td><td>Advance ship notices, outbound</td><td class="num">1,208</td></tr>
+                  <tr><td><code>810</code></td><td>Invoices, outbound</td><td class="num">1,190</td></tr>
+                  <tr><td><code>850</code></td><td>Purchase orders, inbound (sampled)</td><td class="num">40</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <details>
+          <summary>Appendix C — Methodology and limitations</summary>
+          <div class="details__body">
+            <p>
+              This audit is based solely on documents and reports supplied by the client covering 1
+              April to 30 June 2026. No production systems were accessed and no changes were made to
+              any system or configuration.
+            </p>
+            <p>
+              Findings that reference retailer requirements are based on the trading partner's
+              published supplier specification current as of the report date. Retailer requirements
+              change; confirm the current specification before implementing any remediation.
+            </p>
+            <p>
+              Dollar impacts are estimates derived from the deduction report provided and annualized
+              from a 90-day sample. Actual recovery depends on remediation timing, dispute outcomes
+              and seasonal volume variation. Finding 5 is deliberately left unquantified: the
+              evidence required to size it is not currently retained.
+            </p>
+          </div>
+        </details>
+      </section>
+
+      <footer class="colophon">
+        <p>
+          <strong>Samuel Baker</strong> — EDI Consulting. X12 integration, AS2 and SFTP connectivity,
+          distributor and retailer onboarding, chargeback remediation.
+        </p>
+        <p>
+          An audit needs 90 days of your 997s, any 824s, your deduction report, and a handful of
+          sample 856s and 810s with the matching 850s. No access to your systems.
+        </p>
+        <p>
+          <a href="mailto:samuel@samuelbaker.ca">samuel@samuelbaker.ca</a>
+        </p>
+        <p class="faint">
+          Not affiliated with or endorsed by any retailer named above. Sample data throughout.
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>
