@@ -51,10 +51,8 @@ export default function Blog() {
               key={post.slug}
               to={`/blog/${post.slug}`}
               className="group block bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
-              style={{
-                animationDelay: `${index * 100}ms`,
-                animation: 'slideUp 0.5s ease-out forwards',
-              }}
+              // Delay goes inside the shorthand — see the note in Projects.tsx.
+              style={{ animation: `slideUp 0.5s ease-out ${index * 100}ms both` }}
             >
               <div className="flex items-center gap-3 text-sm text-slate-500 dark:text-slate-400 mb-2">
                 <time dateTime={post.date}>{formatDate(post.date)}</time>
