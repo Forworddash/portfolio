@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://forworddash.github.io/portfolio/</loc>
+  </url>
+  <url>
+    <loc>https://forworddash.github.io/portfolio/blog</loc>
+  </url>
+  <url>
+    <loc>https://forworddash.github.io/portfolio/blog/hello-world</loc>
+    <lastmod>2026-07-24</lastmod>
+  </url>
+  <url>
+    <loc>https://forworddash.github.io/portfolio/blog/privacy-matters</loc>
+    <lastmod>2026-07-27</lastmod>
+  </url>
+</urlset>

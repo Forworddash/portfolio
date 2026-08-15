@@ -2,23 +2,36 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/portfolio/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/portfolio/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
+
+    <!-- Apply the saved theme before first paint. Without this the `dark` class
+         only lands once React mounts, so dark-mode visitors see a white flash.
+         Keep the storage key and the fallback in step with src/hooks/useDarkMode.ts.
+         Inline scripts are blocked by the CSP below unless their hash is listed,
+         so editing this script means recomputing that sha256- value. -->
+    <script>(function(){try{var s=localStorage.getItem('darkMode');var d=s===null?matchMedia('(prefers-color-scheme: dark)').matches:s==='true';if(d)document.documentElement.classList.add('dark')}catch(e){}})()</script>
+
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Developer portfolio showcasing projects and open source contributions" />
-    <meta name="keywords" content="developer, portfolio, web development, software engineer" />
-    <meta name="author" content="Your Name" />
-    
+    <meta
+      name="description"
+      content="Samuel Baker — software developer and EDI consultant. X12 integration, AS2 and SFTP connectivity, retailer onboarding and chargeback remediation, plus open source work in Rust and TypeScript."
+    />
+    <meta
+      name="keywords"
+      content="EDI consultant, X12, AS2, EDI integration, chargeback remediation, software developer, Rust, TypeScript"
+    />
+    <meta name="author" content="Samuel Baker" />
+
     <!-- Security Headers (CSP) -->
-    <meta http-equiv="Content-Security-Policy" 
-          content="default-src 'self'; img-src 'self' https: data:; style-src 'self' 'unsafe-inline'; script-src 'self';" />
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self'; img-src 'self' https: data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'sha256-bNoZWaWv5PlDkb2egg6blQQxdDHdbeLKqNbY10bnMYo=';" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="X-Frame-Options" content="DENY" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
-    
-    <title>Developer Portfolio</title>
-    <script type="module" crossorigin src="/portfolio/assets/index-DGg0aAfM.js"></script>
+
+    <title>Samuel Baker — Developer & EDI Consultant</title>
+    <script type="module" crossorigin src="/portfolio/assets/index-ek91WVIw.js"></script>
     <link rel="modulepreload" crossorigin href="/portfolio/assets/vendor-ByKi_DIr.js">
     <link rel="stylesheet" crossorigin href="/portfolio/assets/index-4OHOq1s_.css">
   </head>
