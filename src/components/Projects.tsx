@@ -82,10 +82,11 @@ export default function Projects({ id = 'projects' }: ProjectsProps) {
               tabIndex={0}
               aria-label={`View details for ${project.title}`}
               className="group cursor-pointer bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900"
-              style={{
-                animationDelay: `${index * 100}ms`,
-                animation: 'slideUp 0.5s ease-out forwards',
-              }}
+              // The delay belongs inside the shorthand: a separate
+              // `animationDelay` key is overwritten by `animation`, which resets
+              // it to 0s and flattens the stagger. `both` applies the 0% frame
+              // during the delay, so a card stays hidden until its turn.
+              style={{ animation: `slideUp 0.5s ease-out ${index * 100}ms both` }}
             >
               {/* Project image — first screenshot if present, else a placeholder */}
               <div className="h-48 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-600 relative overflow-hidden">
