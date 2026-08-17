@@ -14,6 +14,26 @@ import bookme3 from './assets/bookme-3.png';
 
 export const projects: Project[] = [
   {
+    id: '10',
+    title: 'EDI Compliance Audit',
+    description:
+      'A sample client deliverable: a 90-day audit of Walmart EDI deductions that traces $113,540 in annualized, recoverable cost to four correctable EDI defects — none requiring a platform change.',
+    tags: ['EDI', 'X12', 'Consulting', 'Audit'],
+    // Standalone page in public/, served under the /portfolio/ base. Building the
+    // URL from BASE_URL keeps it correct in dev and on GitHub Pages alike.
+    liveUrl: `${import.meta.env.BASE_URL}edi-compliance-audit-sample.html`,
+    liveLabel: 'View Report',
+    details:
+      'A sample deliverable showing how I approach an EDI compliance engagement — from raw deduction data to a ranked, costed remediation plan a supplier can act on.\n\nOver the 90 days reviewed, the supplier incurred $61,240 in Walmart deductions. $28,385 of that — 46% — traces to four correctable EDI defects rather than to fulfillment or carrier performance. Annualized, those defects represent $113,540 in recoverable cost, and none require a platform change.\n\nThe audit also root-causes an OTIF shortfall (97.2% against Walmart\'s 98% threshold) to advance ship notices arriving after the goods they describe — which scores identically to a late delivery and is invisible in the deduction coding. Findings are ranked by dollar impact, each with the evidence and the fix.',
+    highlights: [
+      '90-day Walmart deduction audit, findings ranked by dollar impact',
+      'Traces $113,540 annualized recoverable cost to four correctable defects',
+      'Root-causes an OTIF shortfall to late ASNs, not late trucks',
+      'Remediation needs no platform change — largest fix is ~one day of work',
+      'Executive summary, full findings, and appendices',
+    ],
+  },
+  {
     id: '6',
     title: 'CrunchPDF',
     description: 'Browser-based PDF tools with no backend and no upload path. Compression runs client-side via Ghostscript compiled to WebAssembly inside a Web Worker, behind a swappable engine interface so the AGPL dependency stays isolated to one directory (enforced in CI).',
