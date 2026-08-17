@@ -3,8 +3,12 @@ export interface Project {
   title: string;
   description: string;
   tags: string[];
-  githubUrl: string;
+  // Optional: a document-only project (e.g. a sample report) has no repo.
+  githubUrl?: string;
   liveUrl?: string;
+  // Label for the liveUrl button; defaults to "Live Demo". Set it to something
+  // like "View Report" when the link is a document rather than a running app.
+  liveLabel?: string;
   imageUrl?: string;
   // Shown only in the detail modal. `details` is a longer write-up (paragraphs
   // split on blank lines); `highlights` is a feature/bullet list. Both optional
