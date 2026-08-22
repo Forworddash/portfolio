@@ -6,6 +6,12 @@
   body {
     @apply font-sans antialiased;
   }
+
+  /* The header is fixed, so an anchor jump or scrollIntoView would otherwise
+     park a section's heading underneath it. */
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
 }
 
 @layer utilities {
