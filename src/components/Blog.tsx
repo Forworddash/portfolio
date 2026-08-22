@@ -1,9 +1,17 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { posts, allTags, formatDate } from '../blog';
+import { useDocumentMeta } from '../hooks/useDocumentMeta';
 
 export default function Blog() {
   const [selectedTag, setSelectedTag] = useState<string>('All');
+
+  useDocumentMeta({
+    title: 'Blog — Samuel Baker',
+    description:
+      'Notes on EDI, TypeScript, Rust and building software that respects the people using it.',
+    path: '/blog',
+  });
 
   const tags = ['All', ...allTags];
   const filteredPosts =

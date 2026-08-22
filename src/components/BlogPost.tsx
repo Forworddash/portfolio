@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getPost, formatDate } from '../blog';
+import { useDocumentMeta } from '../hooks/useDocumentMeta';
 
 // The plain text-slate-*/dark:text-slate-* utilities repeat the colours
 // prose-invert already sets. They sit in the utilities layer, so they still
@@ -23,14 +24,24 @@ export default function BlogPost() {
     window.scrollTo(0, 0);
   }, [slug]);
 
-  useEffect(() => {
-    if (!post) return;
-    const previous = document.title;
-    document.title = `${post.title} — Blog`;
-    return () => {
-      document.title = previous;
-    };
-  }, [post]);
+  // Called unconditionally, before the not-found early return below — the
+  // missing-post branch gets its own metadata rather than inheriting whatever
+  // the previous route left in <head>.
+  useDocumentMeta(
+    post
+      ? {
+          title: `${post.title} — Samuel Baker`,
+          description: post.description,
+          path: `/blog/${post.slug}`,
+          type: 'article',
+        }
+      : {
+          title: 'Post not found — Samuel Baker',
+          description: 'There is no post at this address.',
+          path: `/blog/${slug ?? ''}`,
+          noindex: true,
+        },
+  );
 
   if (!post) {
     return (
