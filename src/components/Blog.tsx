@@ -14,12 +14,13 @@ export default function Blog() {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12 animate-slide-up">
-          <h2 className="text-sm font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider mb-2">
+          <p className="text-sm font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider mb-2">
             Writing
-          </h2>
-          <h3 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">
+          </p>
+          {/* The blog index is its own page, so its title is the h1. */}
+          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">
             Blog
-          </h3>
+          </h1>
           <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
             Notes from another brain.
           </p>
@@ -68,9 +69,9 @@ export default function Blog() {
                 )}
               </div>
 
-              <h4 className="text-2xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+              <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                 {post.title}
-              </h4>
+              </h2>
 
               <p className="text-slate-600 dark:text-slate-300 mb-4 line-clamp-2">
                 {post.description}

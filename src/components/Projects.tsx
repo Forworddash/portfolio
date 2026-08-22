@@ -10,15 +10,10 @@ interface ProjectsProps {
 export default function Projects({ id = 'projects' }: ProjectsProps) {
   const [selectedTag, setSelectedTag] = useState<string>('All');
   const [filteredProjects, setFilteredProjects] = useState<Project[]>(projects);
-  const [isVisible, setIsVisible] = useState(false);
   const [activeProject, setActiveProject] = useState<Project | null>(null);
 
   // Get all unique tags
   const allTags = ['All', ...new Set(projects.flatMap((p) => p.tags))].sort();
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
 
   useEffect(() => {
     if (selectedTag === 'All') {
@@ -31,19 +26,20 @@ export default function Projects({ id = 'projects' }: ProjectsProps) {
   return (
     <section
       id={id}
-      className={`min-h-screen bg-white dark:bg-slate-900 px-6 py-20 transition-opacity duration-1000 ${
-        isVisible ? 'opacity-100' : 'opacity-0'
-      }`}
+      // Fades in from CSS rather than from a mount-triggered opacity flip, so
+      // the section is never rendered invisible waiting on an effect to run.
+      className="min-h-screen bg-white dark:bg-slate-900 px-6 py-20 animate-fade-in"
     >
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12 animate-slide-up">
-          <h2 className="text-sm font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider mb-2">
+          {/* Eyebrow label, not a heading — see the note in About.tsx. */}
+          <p className="text-sm font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider mb-2">
             Portfolio
-          </h2>
-          <h3 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">
+          </p>
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">
             Featured Projects
-          </h3>
+          </h2>
           <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
             A collection of personal and professional projects.
           </p>
@@ -121,9 +117,9 @@ export default function Projects({ id = 'projects' }: ProjectsProps) {
 
               {/* Project Content */}
               <div className="p-6">
-                <h4 className="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                   {project.title}
-                </h4>
+                </h3>
                 <p className="text-slate-600 dark:text-slate-300 mb-4 line-clamp-2">
                   {project.description}
                 </p>

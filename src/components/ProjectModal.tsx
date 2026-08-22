@@ -6,14 +6,58 @@ interface ProjectModalProps {
   onClose: () => void;
 }
 
+// Everything inside the panel that can hold focus. The panel itself carries
+// tabIndex={-1} so it is deliberately excluded — it is the initial landing
+// spot, not a stop in the tab order.
+const FOCUSABLE =
+  'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
 export default function ProjectModal({ project, onClose }: ProjectModalProps) {
   const panelRef = useRef<HTMLDivElement>(null);
+  // Whatever had focus when the modal opened — usually the project card. Focus
+  // is handed back on close so a keyboard user resumes where they left off
+  // instead of at the top of the document.
+  const openerRef = useRef<HTMLElement | null>(null);
 
-  // Close on Escape, and lock background scroll while the modal is open.
+  // Close on Escape, keep Tab inside the dialog, and lock background scroll.
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') {
+        onClose();
+        return;
+      }
+      if (e.key !== 'Tab') return;
+
+      const panel = panelRef.current;
+      if (!panel) return;
+
+      // Read the list on every Tab rather than caching it: the screenshot links
+      // and the code/demo buttons differ per project.
+      const items = Array.from(panel.querySelectorAll<HTMLElement>(FOCUSABLE));
+      if (items.length === 0) {
+        e.preventDefault();
+        panel.focus();
+        return;
+      }
+
+      const first = items[0];
+      const last = items[items.length - 1];
+      const active = document.activeElement;
+      const outside = !active || !panel.contains(active);
+
+      // Wrapping at both ends is what stops Tab escaping to the page behind the
+      // overlay, which is still fully interactive underneath.
+      if (e.shiftKey) {
+        if (outside || active === first || active === panel) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else if (outside || active === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
+
     document.addEventListener('keydown', onKeyDown);
 
     const previousOverflow = document.body.style.overflow;
@@ -25,9 +69,15 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
     };
   }, [onClose]);
 
-  // Move focus into the dialog so keyboard and screen-reader users land here.
+  // Move focus into the dialog so keyboard and screen-reader users land here,
+  // and return it to the opener on unmount.
   useEffect(() => {
+    openerRef.current = document.activeElement as HTMLElement | null;
     panelRef.current?.focus();
+
+    return () => {
+      openerRef.current?.focus?.();
+    };
   }, []);
 
   const paragraphs = project.details
@@ -66,12 +116,12 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
         <div className="p-6 sm:p-8">
           {/* Header */}
-          <h3
+          <h2
             id="project-modal-title"
             className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-4 pr-10"
           >
             {project.title}
-          </h3>
+          </h2>
 
           <div className="flex flex-wrap gap-2 mb-6">
             {project.tags.map((tag) => (
@@ -116,9 +166,9 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           {/* Highlights */}
           {project.highlights && project.highlights.length > 0 && (
             <div className="mt-6">
-              <h4 className="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider mb-3">
+              <h3 className="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider mb-3">
                 Highlights
-              </h4>
+              </h3>
               <ul className="space-y-2">
                 {project.highlights.map((item) => (
                   <li

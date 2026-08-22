@@ -22,7 +22,7 @@ function NotFound() {
   return (
     <section className="min-h-screen bg-white dark:bg-slate-900 px-6 pt-32 pb-20">
       <div className="max-w-3xl mx-auto text-center">
-        <h3 className="text-4xl font-bold text-slate-900 dark:text-white mb-4">Page not found</h3>
+        <h1 className="text-4xl font-bold text-slate-900 dark:text-white mb-4">Page not found</h1>
         <p className="text-lg text-slate-600 dark:text-slate-300 mb-8">
           There's nothing at this address.
         </p>

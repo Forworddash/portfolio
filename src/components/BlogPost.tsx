@@ -36,9 +36,9 @@ export default function BlogPost() {
     return (
       <section className="min-h-screen bg-white dark:bg-slate-900 px-6 pt-32 pb-20">
         <div className="max-w-3xl mx-auto text-center">
-          <h3 className="text-4xl font-bold text-slate-900 dark:text-white mb-4">
+          <h1 className="text-4xl font-bold text-slate-900 dark:text-white mb-4">
             Post not found
-          </h3>
+          </h1>
           <p className="text-lg text-slate-600 dark:text-slate-300 mb-8">
             There's no post at this address.
           </p>
