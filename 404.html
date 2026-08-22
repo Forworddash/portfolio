@@ -13,27 +13,90 @@
     <script>(function(){try{var s=localStorage.getItem('darkMode');var d=s===null?matchMedia('(prefers-color-scheme: dark)').matches:s==='true';if(d)document.documentElement.classList.add('dark')}catch(e){}})()</script>
 
     <!-- SEO Meta Tags -->
+    <!-- These are the defaults for the home page. Every route overwrites the
+         title, description, canonical and og:*/twitter:* URLs on mount via
+         src/hooks/useDocumentMeta.ts — the tags below are what a scraper that
+         does not run JavaScript sees, and what the router falls back to. -->
     <meta
       name="description"
-      content="Samuel Baker — software developer and EDI consultant. X12 integration, AS2 and SFTP connectivity, retailer onboarding and chargeback remediation, plus open source work in Rust and TypeScript."
-    />
-    <meta
-      name="keywords"
-      content="EDI consultant, X12, AS2, EDI integration, chargeback remediation, software developer, Rust, TypeScript"
+      content="Full-stack developer and EDI consultant. Built an in-house EDI platform from scratch — 30+ trading-partner integrations, AS2, X12 mapping, chargeback remediation."
     />
     <meta name="author" content="Samuel Baker" />
+    <link rel="canonical" href="https://forworddash.github.io/portfolio/" />
+
+    <!-- Open Graph — what LinkedIn, Slack, iMessage and Facebook read -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Samuel Baker" />
+    <meta property="og:title" content="Samuel Baker — Developer & EDI Consultant" />
+    <meta
+      property="og:description"
+      content="Full-stack developer and EDI consultant. Built an in-house EDI platform from scratch — 30+ trading-partner integrations, AS2, X12 mapping, chargeback remediation."
+    />
+    <meta property="og:url" content="https://forworddash.github.io/portfolio/" />
+    <meta property="og:locale" content="en_US" />
+    <!-- Add a 1200x630 PNG at public/og-image.png and uncomment these two lines
+         to get a picture on the share card instead of a text-only one. SVG will
+         not work here — LinkedIn and X both ignore it. -->
+    <!-- <meta property="og:image" content="https://forworddash.github.io/portfolio/og-image.png" /> -->
+    <!-- <meta property="og:image:alt" content="Samuel Baker — Developer & EDI Consultant" /> -->
+
+    <!-- Twitter/X falls back to the og:* tags for everything not set here. -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Samuel Baker — Developer & EDI Consultant" />
+    <meta
+      name="twitter:description"
+      content="Full-stack developer and EDI consultant. Built an in-house EDI platform from scratch — 30+ trading-partner integrations, AS2, X12 mapping, chargeback remediation."
+    />
 
     <!-- Security Headers (CSP) -->
+    <!-- script-src lists a hash per inline <script>: the theme script above and
+         the JSON-LD block below. Chrome enforces script-src on
+         application/ld+json too, so editing either one means recomputing both
+         hashes. See the `npm run csp-hashes` script in package.json. -->
     <meta http-equiv="Content-Security-Policy"
-          content="default-src 'self'; img-src 'self' https: data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'sha256-bNoZWaWv5PlDkb2egg6blQQxdDHdbeLKqNbY10bnMYo=';" />
+          content="default-src 'self'; img-src 'self' https: data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'sha256-bNoZWaWv5PlDkb2egg6blQQxdDHdbeLKqNbY10bnMYo=' 'sha256-jEM6k8/eHJ0VoSAITCCjgxUUvpPOEhSpuZM51iS60Ao=';" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="X-Frame-Options" content="DENY" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
 
     <title>Samuel Baker — Developer & EDI Consultant</title>
-    <script type="module" crossorigin src="/portfolio/assets/index-D3BLIzd3.js"></script>
+
+    <!-- Structured data: tells Google this page is a person's profile, so a
+         search for the name can surface the site with a knowledge panel. -->
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "url": "https://forworddash.github.io/portfolio/",
+  "name": "Samuel Baker — Developer & EDI Consultant",
+  "mainEntity": {
+    "@type": "Person",
+    "name": "Samuel Baker",
+    "email": "mailto:samuel@samuelbaker.ca",
+    "url": "https://forworddash.github.io/portfolio/",
+    "jobTitle": "Full-Stack Developer & EDI Consultant",
+    "description": "Full-stack developer with 4.5 years of experience, including building an in-house EDI platform from the ground up with over 30 trading-partner integrations.",
+    "sameAs": ["https://github.com/Forworddash"],
+    "knowsAbout": [
+      "Electronic Data Interchange",
+      "ANSI X12",
+      "EDIFACT",
+      "AS2",
+      "SFTP",
+      "EDI mapping",
+      "Trading partner onboarding",
+      "Chargeback remediation",
+      "TypeScript",
+      "React",
+      "Rust",
+      "Node.js"
+    ]
+  }
+}
+    </script>
+    <script type="module" crossorigin src="/portfolio/assets/index-DO-7viqi.js"></script>
     <link rel="modulepreload" crossorigin href="/portfolio/assets/vendor-ByKi_DIr.js">
-    <link rel="stylesheet" crossorigin href="/portfolio/assets/index-BTdQxXp4.css">
+    <link rel="stylesheet" crossorigin href="/portfolio/assets/index-CX9k887L.css">
   </head>
   <body>
     <div id="root"></div>
