@@ -13,3 +13,33 @@
     text-wrap: balance;
   }
 }
+
+/*
+ * Honour the OS "reduce motion" setting. This covers the section fade-ins, the
+ * staggered card animations, every hover translate, and the smooth scrolling
+ * set in App.css.
+ *
+ * `animation-delay` has to be zeroed alongside the duration: the staggered
+ * cards use `both` fill, so a card with a 500ms delay sits at its 0% frame —
+ * fully transparent — for half a second even when the animation itself has
+ * been collapsed to nothing.
+ *
+ * Scrolling driven from JavaScript ignores CSS entirely; Header.tsx checks the
+ * same media query before calling scrollIntoView.
+ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+}
